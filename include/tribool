@@ -23,9 +23,9 @@ template <typename Type>
 struct basic_tribool_traits
 {
     // Specializations must implement
-    //  not_function
-    //  and_function
-    //  or_function
+    //  negation
+    //  conjunction
+    //  disjunction
 };
 
 template <typename Type>
@@ -52,17 +52,17 @@ public:
 
     inline basic_tribool<Type> operator ! ()
     {
-        return traits_type::not_function(value);
+        return traits_type::negation(value);
     }
 
     inline basic_tribool<Type> operator && (basic_tribool<Type> other)
     {
-        return traits_type::and_function(value, other.value);
+        return traits_type::conjunction(value, other.value);
     }
 
     inline basic_tribool<Type> operator || (basic_tribool<Type> other)
     {
-        return traits_type::or_function(value, other.value);
+        return traits_type::disjunction(value, other.value);
     }
 
 private:
@@ -76,7 +76,7 @@ struct basic_tribool_traits<basic_tribool_kleene_tag>
 {
     enum value_type { false_value, true_value, indeterminate_value };
 
-    static value_type not_function(value_type lhs)
+    static value_type negation(value_type lhs)
     {
         switch (lhs)
         {
@@ -89,7 +89,7 @@ struct basic_tribool_traits<basic_tribool_kleene_tag>
         }
     }
 
-    static value_type and_function(value_type lhs, value_type rhs)
+    static value_type conjunction(value_type lhs, value_type rhs)
     {
         switch (lhs)
         {
@@ -126,7 +126,7 @@ struct basic_tribool_traits<basic_tribool_kleene_tag>
         }
     }
 
-    static value_type or_function(value_type lhs, value_type rhs)
+    static value_type disjunction(value_type lhs, value_type rhs)
     {
         switch (lhs)
         {
@@ -173,7 +173,7 @@ struct basic_tribool_traits<basic_tribool_neutral_tag>
 {
     enum value_type { false_value, true_value, indeterminate_value };
 
-    static value_type not_function(value_type lhs)
+    static value_type negation(value_type lhs)
     {
         switch (lhs)
         {
@@ -186,7 +186,7 @@ struct basic_tribool_traits<basic_tribool_neutral_tag>
         }
     }
 
-    static value_type and_function(value_type lhs, value_type rhs)
+    static value_type conjunction(value_type lhs, value_type rhs)
     {
         switch (lhs)
         {
@@ -223,7 +223,7 @@ struct basic_tribool_traits<basic_tribool_neutral_tag>
         }
     }
 
-    static value_type or_function(value_type lhs, value_type rhs)
+    static value_type disjunction(value_type lhs, value_type rhs)
     {
         switch (lhs)
         {
